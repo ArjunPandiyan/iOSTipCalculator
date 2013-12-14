@@ -7,6 +7,7 @@
 //
 
 #import "TipViewController.h"
+#import "SettingsViewController.h"
 
 @interface TipViewController ()
 
@@ -15,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lbTotal;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *sgPercent;
 - (void)updateValues;
+- (void)onSettingsButton;
 - (IBAction)tipSelected:(id)sender;
 - (IBAction)onTap:(id)sender;
 
@@ -36,6 +38,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(onSettingsButton)];
     [self updateValues];
 }
 
@@ -63,6 +66,11 @@
     float totalAmount = billAmount + tipAmount;
     self.lbBill.text = [NSString stringWithFormat:@"$%0.2f",tipAmount];
     self.lbTotal.text = [NSString stringWithFormat:@"$%0.2f",totalAmount];
+}
+
+-(void) onSettingsButton {
+    NSLog(@"Settings button clicked");
+    [self.navigationController pushViewController:[[SettingsViewController alloc] init] animated:YES];
 }
 
 @end
