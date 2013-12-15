@@ -19,7 +19,7 @@
 - (void)onSettingsButton;
 - (IBAction)tipSelected:(id)sender;
 - (IBAction)onTap:(id)sender;
-
+- (void)readDefaultTip;
 @end
 
 @implementation TipViewController
@@ -39,6 +39,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(onSettingsButton)];
+    [self updateValues];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self readDefaultTip];
     [self updateValues];
 }
 
@@ -71,6 +76,22 @@
 -(void) onSettingsButton {
     NSLog(@"Settings button clicked");
     [self.navigationController pushViewController:[[SettingsViewController alloc] init] animated:YES];
+}
+
+-(void) readDefaultTip {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    int percent = [defaults integerForKey:@"defaultPercent"];
+    NSLog([NSString stringWithFormat:@"%i",percent ]);
+    if(percent==10) {
+        _sgPercent.selectedSegmentIndex = 0;
+    }
+    else if(percent==15) {
+        _sgPercent.selectedSegmentIndex = 1;
+    }
+    else if(percent==20) {
+        _sgPercent.selectedSegmentIndex = 2;
+    }
+
 }
 
 @end
